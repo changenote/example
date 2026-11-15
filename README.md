@@ -1,7 +1,7 @@
 # changenote-example
 
 Tested examples for the [changenote CLI](https://github.com/changenote/changenote) and [GitHub Actions](https://github.com/changenote/action).
-Inspect change notes, SemVer release plans, version sources, and release workflows across Python, Node.js, Rust, and Go.
+Inspect change notes, SemVer release plans, version sources, and release workflows across Python, Node.js, Rust, Go, and Android.
 
 The fixtures in `examples/` have separate configurations and known starting versions.
 The packages in `packages/` use the root configuration and have a real release workflow.
@@ -78,6 +78,7 @@ Never copy sample notes into the root `.changenote/` directory: it is an active 
 | [Change notes](examples/notes/README.md) | Patch, major, shared, empty, highest-bump, mixed-bump, and multiline notes |
 | [Release planning](examples/planning/README.md) | Note paths, automatic note names, and fixed version groups |
 | [Version sources](examples/manifests/README.md) | `VERSION`, `pyproject.toml`, `Cargo.toml`, and `package.json` |
+| [Android apps](examples/android/README.md) | Native `gradle.properties` versions and build-code increments |
 | [pnpm and Bun](examples/package-managers/README.md) | Offline workspace releases with existing pnpm and Bun text lockfiles |
 | [PR note checks](examples/check/README.md) | Committed changes, release exemptions, and validation failures |
 | [Release Actions](examples/actions/README.md) | Root, composed, command-hook, and external-CI workflow templates |
@@ -113,7 +114,7 @@ For a local CLI build, pass its absolute executable path to `--cli`.
   - They also check template syntax when `actionlint` is installed.
 
 These checks do not run `version`, `tag`, or publication, and do not contact GitHub.
-Actual release writes are tested in the core CLI repository and in the separate package-manager verifier below.
+Actual release writes are tested in the core CLI repository and in the separate package-manager and Android verifiers below.
 
 ### pnpm and Bun verification
 
@@ -128,6 +129,22 @@ uv run --no-project python scripts/verify_package_managers.py --cli ../changenot
 
 This separate verifier runs `version` only in temporary copies, then checks frozen/offline lockfile consistency and script suppression.
 It does not change active packages or source fixtures, and does not run tags or publication.
+
+### Android verification
+
+The [Android fixture](examples/android/README.md) requires a newer local CLI
+with native `gradle.properties` support. It is not covered by the older CI pin.
+With sibling checkouts, run:
+
+```sh
+cargo build --locked --manifest-path ../changenote/Cargo.toml -p changenote
+uv run --no-project python scripts/verify_android.py --cli ../changenote/target/debug/changenote
+```
+
+This verifier checks version `0.10.0` to `0.11.0` and code `20` to `21`.
+It runs release writes only in a temporary copy, preserves other properties,
+and uses no separate `VERSION` file. No Java, Gradle, or Android SDK is needed.
+It does not change active packages, workflows, or release configuration.
 
 ## Repository packages
 
