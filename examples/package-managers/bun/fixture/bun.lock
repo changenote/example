@@ -1,0 +1,25 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "bun-example",
+    },
+    "packages/app": {
+      "name": "example-app",
+      "version": "1.2.3",
+      "dependencies": {
+        "example-library": "workspace:*",
+      },
+    },
+    "packages/library": {
+      "name": "example-library",
+      "version": "1.2.3",
+    },
+  },
+  "packages": {
+    "example-app": ["example-app@workspace:packages/app"],
+
+    "example-library": ["example-library@workspace:packages/library"],
+  }
+}

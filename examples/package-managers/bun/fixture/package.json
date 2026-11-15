@@ -1,0 +1,10 @@
+{
+  "name": "bun-example",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "preinstall": "echo unexpected > lifecycle-ran"
+  }
+}
