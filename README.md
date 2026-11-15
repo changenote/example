@@ -1,7 +1,7 @@
 # changenote-example
 
 Tested examples for the [changenote CLI](https://github.com/changenote/changenote) and [GitHub Actions](https://github.com/changenote/action).
-Inspect change notes, SemVer release plans, version sources, and release workflows across Python, Node.js, Rust, Go, and Android.
+Inspect change notes, SemVer release plans, version sources, and release workflows across Python, Node.js, Rust, Go, Android, and Lean 4.
 
 The fixtures in `examples/` have separate configurations and known starting versions.
 The packages in `packages/` use the root configuration and have a real release workflow.
@@ -79,6 +79,7 @@ Never copy sample notes into the root `.changenote/` directory: it is an active 
 | [Release planning](examples/planning/README.md) | Note paths, automatic note names, and fixed version groups |
 | [Version sources](examples/manifests/README.md) | `VERSION`, `pyproject.toml`, `Cargo.toml`, and `package.json` |
 | [Android apps](examples/android/README.md) | Native `gradle.properties` versions and build-code increments |
+| [Lean 4 packages](examples/lean/README.md) | Native `lakefile.toml` versions and unchanged toolchain pins |
 | [pnpm and Bun](examples/package-managers/README.md) | Offline workspace releases with existing pnpm and Bun text lockfiles |
 | [PR note checks](examples/check/README.md) | Committed changes, release exemptions, and validation failures |
 | [Release Actions](examples/actions/README.md) | Root, composed, command-hook, and external-CI workflow templates |
@@ -114,7 +115,7 @@ For a local CLI build, pass its absolute executable path to `--cli`.
   - They also check template syntax when `actionlint` is installed.
 
 These checks do not run `version`, `tag`, or publication, and do not contact GitHub.
-Actual release writes are tested in the core CLI repository and in the separate package-manager and Android verifiers below.
+Actual release writes are tested in the core CLI repository and in the separate package-manager, Android, and Lean verifiers below.
 
 ### pnpm and Bun verification
 
@@ -145,6 +146,23 @@ This verifier checks version `0.10.0` to `0.11.0` and code `20` to `21`.
 It runs release writes only in a temporary copy, preserves other properties,
 and uses no separate `VERSION` file. No Java, Gradle, or Android SDK is needed.
 It does not change active packages, workflows, or release configuration.
+
+### Lean 4 verification
+
+The [Lean fixture](examples/lean/README.md) requires a newer local CLI build
+with `lakefile.toml` support. It is not covered by the older CI CLI pin.
+With sibling checkouts, run:
+
+```sh
+cargo build --locked --manifest-path ../changenote/Cargo.toml -p changenote
+uv run --no-project python scripts/verify_lean.py --cli ../changenote/target/debug/changenote
+```
+
+This verifier runs `version` only in temporary copies.
+It checks the native `lakefile.toml` version update and unchanged Lean sources,
+toolchain pins, and dependency manifests. No separate `VERSION` file is used.
+It needs no Lean runtime and does not run tags, publication, or active-package releases.
+The fixture guide includes separate library-build commands for Lean 4.35.0.
 
 ## Repository packages
 
