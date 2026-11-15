@@ -1,0 +1,12 @@
+[
+  {
+    "package": "android-app",
+    "old_version": "0.10.0",
+    "version": "0.11.0",
+    "bump": "minor",
+    "tag": "v0.11.0",
+    "notes": [
+      "Add a sample Android feature."
+    ]
+  }
+]

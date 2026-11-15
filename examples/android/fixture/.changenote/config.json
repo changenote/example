@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/changenote/changenote/main/schema.json",
+  "packages": {
+    "android-app": {
+      "path": ".",
+      "version_file": "gradle.properties"
+    }
+  }
+}
