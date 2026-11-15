@@ -1,0 +1,7 @@
+# Package metadata
+name = "example"
+version = "1.2.3" # package release
+defaultTargets = ["Example"]
+
+[[lean_lib]]
+name = "Example"

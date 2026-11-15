@@ -1,0 +1,12 @@
+[
+  {
+    "package": "pkg-lean",
+    "old_version": "1.2.3",
+    "version": "1.3.0",
+    "bump": "minor",
+    "tag": "v1.3.0",
+    "notes": [
+      "Add a sample theorem."
+    ]
+  }
+]

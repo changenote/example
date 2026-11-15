@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/changenote/changenote/main/schema.json",
+  "packages": {
+    "pkg-lean": {
+      "path": ".",
+      "version_file": "lakefile.toml"
+    }
+  }
+}
