@@ -1,0 +1,18 @@
+{
+  "packages": {
+    "library": {
+      "path": "packages/library",
+      "version_file": "package.json"
+    },
+    "app": {
+      "path": "packages/app",
+      "version_file": "package.json"
+    }
+  },
+  "fixed": [
+    [
+      "library",
+      "app"
+    ]
+  ]
+}

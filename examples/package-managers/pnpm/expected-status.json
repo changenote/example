@@ -1,0 +1,20 @@
+[
+  {
+    "package": "app",
+    "old_version": "1.2.3",
+    "version": "1.3.0",
+    "bump": "minor",
+    "tag": "changenote/app@v1.3.0",
+    "notes": []
+  },
+  {
+    "package": "library",
+    "old_version": "1.2.3",
+    "version": "1.3.0",
+    "bump": "minor",
+    "tag": "changenote/library@v1.3.0",
+    "notes": [
+      "Add a sample API."
+    ]
+  }
+]

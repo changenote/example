@@ -78,6 +78,7 @@ Never copy sample notes into the root `.changenote/` directory: it is an active 
 | [Change notes](examples/notes/README.md) | Patch, major, shared, empty, highest-bump, mixed-bump, and multiline notes |
 | [Release planning](examples/planning/README.md) | Note paths, automatic note names, and fixed version groups |
 | [Version sources](examples/manifests/README.md) | `VERSION`, `pyproject.toml`, `Cargo.toml`, and `package.json` |
+| [pnpm and Bun](examples/package-managers/README.md) | Offline workspace releases with existing pnpm and Bun text lockfiles |
 | [PR note checks](examples/check/README.md) | Committed changes, release exemptions, and validation failures |
 | [Release Actions](examples/actions/README.md) | Root, composed, command-hook, and external-CI workflow templates |
 | [Publication inspection](examples/inspect/README.md) | Read-only workflow template and mock publication reports |
@@ -112,7 +113,21 @@ For a local CLI build, pass its absolute executable path to `--cli`.
   - They also check template syntax when `actionlint` is installed.
 
 These checks do not run `version`, `tag`, or publication, and do not contact GitHub.
-Actual release writes are tested in the core CLI repository.
+Actual release writes are tested in the core CLI repository and in the separate package-manager verifier below.
+
+### pnpm and Bun verification
+
+The [package-manager fixtures](examples/package-managers/README.md) require a newer local CLI build, pnpm, and Bun.
+They are not covered by the older CI CLI pin above.
+With sibling checkouts, run:
+
+```sh
+cargo build --locked --manifest-path ../changenote/Cargo.toml -p changenote
+uv run --no-project python scripts/verify_package_managers.py --cli ../changenote/target/debug/changenote
+```
+
+This separate verifier runs `version` only in temporary copies, then checks frozen/offline lockfile consistency and script suppression.
+It does not change active packages or source fixtures, and does not run tags or publication.
 
 ## Repository packages
 
